@@ -1,0 +1,184 @@
+﻿@model IEnumerable<Practica2_BDD.Models.Persona>
+
+@{
+    ViewData["Title"] = "Fragmentacion BDD";
+}
+
+<h1>Lista de personas</h1>
+
+<button class="btn btn-primary" id="fragH">fragmentacion Horizontal</button>
+<button class="btn btn-primary" id="fragH">fragmentacion Vertical</button>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NoControl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Domicilio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ciudad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Edad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Oficio)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NoControl)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Domicilio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ciudad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Edad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Oficio)
+                </td>
+                <!-- <td>
+                    <a asp-action="Edit" asp-route-id="@item.PersonaId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.PersonaId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.PersonaId">Delete</a>
+                </td>-->
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<form asp-controller="Home" asp-action="RealizarFragmentacion">
+    <div class="row align-items-center">
+        <div class="col-2">
+
+            <div class="form-check">
+                <input class="form-check-input esTexto" type="radio" name="exampleRadios" id="exampleRadios1" value="Nombre">
+                <label class="form-check-label" for="exampleRadios1">
+                    Nombre
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input esTexto" type="radio" name="exampleRadios" id="exampleRadios2" value="Domicilio">
+                <label class="form-check-label" for="exampleRadios2">
+                    Domicilio
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input esTexto" type="radio" name="exampleRadios" id="exampleRadios2" value="Ciudad">
+                <label class="form-check-label" for="exampleRadios2">
+                    Ciudad
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input esNumero" type="radio" name="exampleRadios" id="exampleRadios2" value="Edad">
+                <label class="form-check-label" for="exampleRadios2">
+                    Edad
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input esTexto" type="radio" name="exampleRadios" id="exampleRadios2" value="Oficio">
+                <label class="form-check-label" for="exampleRadios2">
+                    Oficio
+                </label>
+            </div>
+            <input name="campo" value="" id="campo" hidden />
+            <input name="tipo" value="" id="tipo" hidden />
+            <input name="valor" value="" id="valor" hidden />
+        </div>
+
+        <div class="col-8" id="signos" hidden>
+            <div class="row">
+                <div class="form-check col">
+                    <input class="form-check-input" type="radio" name="radiosSignos" id="radiosSignos1" value="<">
+                    <label class="form-check-label" for="radiosSignos1">
+                        <
+                    </label>
+                </div>
+                <div class="form-check col">
+                    <input class="form-check-input" type="radio" name="radiosSignos" id="radiosSignos2" value=">">
+                    <label class="form-check-label" for="radiosSignos2">
+                        >
+                    </label>
+                </div>
+                <div class="form-check col">
+                    <input class="form-check-input" type="radio" name="radiosSignos" id="radiosSignos3" value="<=">
+                    <label class="form-check-label" for="radiosSignos3">
+                        <=
+                    </label>
+                </div>
+                <div class="form-check col">
+                    <input class="form-check-input" type="radio" name="radiosSignos" id="radiosSignos4" value=">=">
+                    <label class="form-check-label" for="radiosSignos4">
+                        >=
+                    </label>
+                </div>
+                <div class="form-check col">
+                    <input class="form-check-input" type="radio" name="radiosSignos" id="radiosSignos5" value="=">
+                    <label class="form-check-label" for="radiosSignos5">
+                        =
+                    </label>
+                </div>
+                <div class="form-check col">
+                    <input class="form-check-input" type="radio" name="radiosSignos" id="radiosSignos6" value="<>">
+                    <label class="form-check-label" for="radiosSignos6">
+                        <>
+                    </label>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-2">
+            <div class="row" id="inputText" hidden>
+                <label>Introduce el dato:</label>
+                <input class="form-control" type="text" id="texto" name="texto" />
+            </div>
+            <div class="row" id="inputNumber" hidden>
+                <label>Introduce la edad:</label>
+                <input class="form-control" type="number" id="numero" name="numero" />
+            </div>
+            <button id="buscar" class="btn btn-success" type="submit" hidden>Fragmentar</button>
+        </div>
+
+    </div>
+</form>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalFragmentacion" tabindex="-1" aria-labelledby="modalFragmentacionLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalFragmentacionLabel">Fragmentar</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="fragmentar">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/site.js"></script>
